@@ -1,0 +1,9 @@
+@model Library.Domain.Book
+@{ ViewData["Title"] = "Delete Book"; }
+<h2>Delete Book?</h2>
+<p class="text-danger">Are you sure you want to delete <strong>@Model.Title</strong>?</p>
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+</form>

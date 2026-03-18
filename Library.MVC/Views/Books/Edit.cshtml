@@ -1,0 +1,17 @@
+@model Library.Domain.Book
+@{ ViewData["Title"] = "Edit Book"; }
+<h2>Edit Book</h2>
+<div class="row"><div class="col-md-5">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3"><label asp-for="Title" class="form-label"></label><input asp-for="Title" class="form-control" /></div>
+        <div class="mb-3"><label asp-for="Author" class="form-label"></label><input asp-for="Author" class="form-control" /></div>
+        <div class="mb-3"><label asp-for="Isbn" class="form-label">ISBN</label><input asp-for="Isbn" class="form-control" /></div>
+        <div class="mb-3"><label asp-for="Category" class="form-label"></label><input asp-for="Category" class="form-control" /></div>
+        <div class="mb-3 form-check"><input asp-for="IsAvailable" class="form-check-input" /><label asp-for="IsAvailable" class="form-check-label">Available</label></div>
+        <button type="submit" class="btn btn-warning">Save</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div></div>
+@section Scripts { @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); } }

@@ -1,0 +1,13 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center py-5">
+    <h1 class="display-5">📚 Community Library</h1>
+    <p class="lead text-muted">Manage books, members, and loans.</p>
+    <div class="d-flex justify-content-center gap-3 mt-4">
+        <a asp-controller="Books" asp-action="Index" class="btn btn-primary btn-lg">Browse Books</a>
+        <a asp-controller="Members" asp-action="Index" class="btn btn-outline-secondary btn-lg">Members</a>
+        <a asp-controller="Loans" asp-action="Index" class="btn btn-outline-secondary btn-lg">Loans</a>
+    </div>
+</div>

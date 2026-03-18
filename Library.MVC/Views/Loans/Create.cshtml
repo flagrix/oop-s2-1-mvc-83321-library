@@ -1,0 +1,49 @@
+@model Library.Domain.Loan
+@{
+    ViewData["Title"] = "New Loan";
+}
+
+<h2>New Loan</h2>
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="BookId" class="form-label">Book</label>
+                <select asp-for="BookId" class="form-select" asp-items="ViewBag.BookId">
+                    <option value="">-- Select a book --</option>
+                </select>
+                <span asp-validation-for="BookId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="MemberId" class="form-label">Member</label>
+                <select asp-for="MemberId" class="form-select" asp-items="ViewBag.MemberId">
+                    <option value="">-- Select a member --</option>
+                </select>
+                <span asp-validation-for="MemberId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="LoanDate" class="form-label">Loan Date</label>
+                <input asp-for="LoanDate" type="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="LoanDate" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DueDate" class="form-label">Due Date</label>
+                <input asp-for="DueDate" type="date" class="form-control" value="@DateTime.Today.AddDays(14).ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Loan</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

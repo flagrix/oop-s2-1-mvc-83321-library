@@ -1,0 +1,24 @@
+@model Library.Domain.Loan
+@{
+    ViewData["Title"] = "Delete Loan";
+}
+
+<h2>Delete Loan?</h2>
+<p class="text-danger">Are you sure you want to delete this loan?</p>
+
+<dl class="row">
+    <dt class="col-sm-3">Book</dt>
+    <dd class="col-sm-9">@Model.Book?.Title</dd>
+    <dt class="col-sm-3">Member</dt>
+    <dd class="col-sm-9">@Model.Member?.FullName</dd>
+    <dt class="col-sm-3">Loan Date</dt>
+    <dd class="col-sm-9">@Model.LoanDate.ToShortDateString()</dd>
+    <dt class="col-sm-3">Due Date</dt>
+    <dd class="col-sm-9">@Model.DueDate.ToShortDateString()</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+</form>

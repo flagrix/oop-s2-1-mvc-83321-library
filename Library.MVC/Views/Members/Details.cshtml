@@ -1,0 +1,36 @@
+@model Library.Domain.Member
+@{
+    ViewData["Title"] = "Member Details";
+}
+
+<h2>@Model.FullName</h2>
+<dl class="row">
+    <dt class="col-sm-2">Email</dt><dd class="col-sm-10">@Model.Email</dd>
+    <dt class="col-sm-2">Phone</dt><dd class="col-sm-10">@Model.Phone</dd>
+</dl>
+
+<h5>Loan History</h5>
+@if (!Model.Loans.Any())
+{
+    <p class="text-muted">No loans yet.</p>
+}
+else
+{
+    <table class="table table-sm">
+        <thead>
+            <tr><th>Book</th><th>Loan Date</th><th>Due Date</th><th>Returned</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var l in Model.Loans)
+            {
+                <tr>
+                    <td>@l.Book?.Title</td>
+                    <td>@l.LoanDate.ToShortDateString()</td>
+                    <td>@l.DueDate.ToShortDateString()</td>
+                    <td>@(l.ReturnedDate.HasValue ? l.ReturnedDate.Value.ToShortDateString() : "—")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<a asp-action="Index" class="btn btn-outline-secondary">Back</a>

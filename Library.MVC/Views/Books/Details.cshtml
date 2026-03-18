@@ -1,0 +1,32 @@
+@model Library.Domain.Book
+@{ ViewData["Title"] = "Book Details"; }
+<h2>@Model.Title</h2>
+<dl class="row">
+    <dt class="col-sm-2">Author</dt><dd class="col-sm-10">@Model.Author</dd>
+    <dt class="col-sm-2">ISBN</dt><dd class="col-sm-10">@Model.Isbn</dd>
+    <dt class="col-sm-2">Category</dt><dd class="col-sm-10">@Model.Category</dd>
+    <dt class="col-sm-2">Status</dt><dd class="col-sm-10">@(Model.IsAvailable ? "✅ Available" : "🔴 On Loan")</dd>
+</dl>
+<h5>Loan History</h5>
+@if (!Model.Loans.Any())
+{
+    <p class="text-muted">No loans yet.</p>
+}
+else
+{
+    <table class="table table-sm">
+        <thead><tr><th>Member</th><th>Loan Date</th><th>Due Date</th><th>Returned</th></tr></thead>
+        <tbody>
+        @foreach (var l in Model.Loans)
+        {
+            <tr>
+                <td>@l.Member?.FullName</td>
+                <td>@l.LoanDate.ToShortDateString()</td>
+                <td>@l.DueDate.ToShortDateString()</td>
+                <td>@(l.ReturnedDate.HasValue ? l.ReturnedDate.Value.ToShortDateString() : "—")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+<a asp-action="Index" class="btn btn-outline-secondary">Back</a>

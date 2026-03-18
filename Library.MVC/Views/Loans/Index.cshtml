@@ -1,0 +1,60 @@
+@model IEnumerable<Library.Domain.Loan>
+@{
+    ViewData["Title"] = "Loans";
+    var today = DateTime.Today;
+}
+
+<h2>📋 Loans</h2>
+
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <a asp-action="Create" class="btn btn-success mb-3">+ New Loan</a>
+}
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Book</th>
+            <th>Member</th>
+            <th>Loan Date</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var loan in Model)
+        {
+            <tr>
+                <td>@loan.Book?.Title</td>
+                <td>@loan.Member?.FullName</td>
+                <td>@loan.LoanDate.ToShortDateString()</td>
+                <td>@loan.DueDate.ToShortDateString()</td>
+                <td>
+                    @if (loan.ReturnedDate.HasValue)
+                    {
+                        <span class="badge bg-success">Returned @loan.ReturnedDate.Value.ToShortDateString()</span>
+                    }
+                    else if (loan.DueDate < today)
+                    {
+                        <span class="badge bg-danger">⚠ Overdue</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Active</span>
+                    }
+                </td>
+                <td>
+                    @if (User.Identity?.IsAuthenticated == true && !loan.ReturnedDate.HasValue)
+                    {
+                        <form asp-action="MarkReturned" asp-route-id="@loan.Id" method="post" style="display:inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-sm btn-outline-success">✔ Mark Returned</button>
+                        </form>
+                        <a asp-action="Delete" asp-route-id="@loan.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
